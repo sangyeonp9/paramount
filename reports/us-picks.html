@@ -1,0 +1,300 @@
+<title>미국 우량·성장 기업 20선</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: research-note column (max 1040px) with a sticky section bar; Part A company analysis, Part B Buffett lens. Same series layout as the Cerebras report, with a link-light teal accent. */
+:root{
+  --bg:#F4F7F7; --surface:#FFFFFF; --ink:#13232B; --muted:#56696F; --line:#D8E2E3;
+  --accent:#0F7F74; --accent-soft:#DDF0EC; --navy:#1E3A52; --navy-soft:#E4ECF2;
+  --good:#2D7D55; --warn:#B7791F; --bad:#B83A3A; --gray:#9AA8AD; --alt:#B8682A;
+  --font-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1619; --surface:#152227; --ink:#E5EEEF; --muted:#97A9AE; --line:#27383E;
+  --accent:#4FC2B3; --accent-soft:#16332F; --navy:#8DB4D6; --navy-soft:#1A2C38;
+  --good:#5BC08A; --warn:#E0B054; --bad:#E27272; --gray:#6C7D82; --alt:#E39A5C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1619; --surface:#152227; --ink:#E5EEEF; --muted:#97A9AE; --line:#27383E;
+  --accent:#4FC2B3; --accent-soft:#16332F; --navy:#8DB4D6; --navy-soft:#1A2C38;
+  --good:#5BC08A; --warn:#E0B054; --bad:#E27272; --gray:#6C7D82; --alt:#E39A5C; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.7;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1040px;margin:0 auto}
+h1,h2,h3{text-wrap:balance;line-height:1.3;margin:0}
+h2{font-size:1.6rem;font-weight:700}
+h3{font-size:1.12rem;font-weight:600;color:var(--navy);margin-top:8px}
+p{margin:0}
+.num{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+a{color:var(--navy)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.hero{display:grid;grid-template-columns:1fr 260px;gap:32px;align-items:center;padding-block:48px 32px}
+.eyebrow{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:700;margin-top:6px}
+.hero .ticker{font-family:var(--font-mono);color:var(--muted);font-size:1rem;margin-top:4px}
+.hero .lede{margin-top:16px;max-width:62ch}
+.meta{margin-top:14px;font-size:.85rem;color:var(--muted)}
+.topo{text-align:center;font-size:.75rem;color:var(--muted)}
+.topo svg{width:100%;max-width:260px;height:auto}
+
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-bottom:8px}
+.nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.nav a{flex:none;text-decoration:none;font-size:.86rem;color:var(--muted);padding:6px 12px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.nav a:hover{color:var(--ink);border-color:var(--line)}
+.nav .part{font-size:.72rem;letter-spacing:.1em;color:var(--accent);font-weight:600;align-self:center;padding:0 4px 0 10px;flex:none}
+
+section{padding-block:40px 8px;scroll-margin-top:64px;display:flex;flex-direction:column;gap:16px}
+.sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--accent);padding-bottom:8px}
+.sec-head .idx{font-family:var(--font-mono);color:var(--accent);font-size:.95rem}
+.part-banner{margin-top:48px;padding:28px 24px;border-radius:14px;background:var(--navy-soft);display:flex;flex-direction:column;gap:6px;scroll-margin-top:64px}
+.part-banner h2{font-size:1.9rem}
+.prose{max-width:72ch}
+ul.list{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+ul.list li::marker{color:var(--accent)}
+
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:2px}
+.kpi .v{font-family:var(--font-mono);font-size:1.5rem;font-weight:600;color:var(--navy)}
+.kpi .l{font-size:.82rem;color:var(--muted)}
+.kpi.good .v{color:var(--good)} .kpi.warn .v{color:var(--warn)}
+
+.callout{background:var(--accent-soft);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+.callout.cool{background:var(--navy-soft)}
+.callout strong.t{color:var(--navy);font-size:1.02rem}
+.verdict{font-size:1.08rem;font-weight:500}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:560px}
+th{background:var(--navy-soft);text-align:left;font-weight:600;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right;font-family:var(--font-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.k{font-weight:600;white-space:nowrap}
+tr.hl td{background:var(--accent-soft)}
+.src{font-size:.78rem;color:var(--muted)}
+
+.chip{display:inline-block;font-size:.76rem;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.chip.bad{background:color-mix(in srgb,var(--bad) 16%,transparent);color:var(--bad)}
+.chip.warn{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.chip.good{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--good)}
+
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.two > *{min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.panel h4{margin:0;font-size:.95rem;display:flex;align-items:center;gap:8px}
+.tag{font-family:var(--font-mono);font-weight:600;width:24px;height:24px;border-radius:6px;display:inline-grid;place-items:center;color:var(--surface);font-size:.8rem}
+
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.chart .ct{font-weight:600;font-size:.95rem}
+.chart svg{width:100%;height:auto;display:block}
+.chart svg text{fill:var(--muted);font-family:var(--font-mono);font-size:11px}
+.chart svg .lbl{fill:var(--ink);font-family:var(--font-body);font-size:12px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+blockquote{margin:0;border-left:3px solid var(--accent);padding:4px 0 4px 16px;font-style:italic;max-width:72ch}
+blockquote cite{display:block;font-style:normal;font-size:.8rem;color:var(--muted);margin-top:4px}
+ol.sources{margin:0;padding-left:1.4em;font-size:.84rem;display:flex;flex-direction:column;gap:4px;overflow-wrap:anywhere}
+footer{padding-block:40px 56px;color:var(--muted);font-size:.8rem;border-top:1px solid var(--line);margin-top:48px}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr}
+  .topo{display:none}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two{grid-template-columns:1fr}
+}
+
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.card .rank{font-family:var(--font-mono);font-size:.8rem;color:var(--accent);font-weight:600}
+.card h3{margin:0;font-size:1.12rem;color:var(--ink)}
+.card .sub{font-family:var(--font-mono);font-size:.78rem;color:var(--muted)}
+.card dl{display:grid;grid-template-columns:4.6em 1fr;gap:4px 10px;margin:0;font-size:.88rem}
+.card dt{color:var(--muted);font-weight:600}
+.card dd{margin:0;min-width:0}
+.crit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.cards,.crit{grid-template-columns:1fr}}
+</style>
+
+<div class="wrap">
+  <header class="hero" style="grid-template-columns:1fr">
+    <div>
+      <div class="eyebrow">미국 상장 · 설립 30년 이내 (1996년 이후)</div>
+      <h1>미국 우량·성장 기업 20선</h1>
+      <p class="lede">세레브라스·아리스타 분석에 쓴 버핏 기준으로 고른 우량 기업 10곳과, 앞으로 10년간 꾸준한 성장이 기대되는 기업 10곳입니다. 처음에는 설립 20년 이내(2006년 이후)로 찾았고, 요청에 따라 30년 이내로 넓혀 총 33개 후보를 조사했습니다.</p>
+      <p class="meta">기준일 2026년 11월 18일 · 주가는 11월 중순 종가(일부 10월) · 투자 권유 아님</p>
+    </div>
+  </header>
+</div>
+
+<nav class="nav" aria-label="섹션 이동"><div class="wrap">
+  <a href="#criteria">선정 기준</a><a href="#buffett">버핏 기준 10선</a><a href="#growth">10년 성장 10선</a><a href="#excluded">제외한 후보</a><a href="#notes">유의사항</a>
+</div></nav>
+
+<main class="wrap">
+<section id="criteria">
+  <div class="sec-head"><h2>선정 기준</h2></div>
+  <div class="crit">
+    <div class="panel"><h4>버핏 기준 10선</h4><p>10년 이상 이익을 지켜줄 해자, 꾸준한 이익, 높은 자기자본이익률, 적은 설비투자, 가격 결정력, 믿을 수 있는 경영진. 지금 가격이 너무 비싸지 않은지도 봤습니다.</p></div>
+    <div class="panel"><h4>10년 성장 10선</h4><p>오래 커질 시장에 있고, 지금도 매출이 20% 이상 늘며, 현금흐름이 플러스이거나 흑자 전환이 가까운 기업. 수익성보다 성장의 지속성을 우선했습니다.</p></div>
+    <div class="panel"><h4>두 목록의 관계</h4><p>알파벳·메타·아리스타는 성장성도 높아 두 목록 모두에 해당하지만 중복을 피해 버핏 목록에만 넣었습니다. 성장 목록은 대부분 아직 비싸거나 회계상 적자입니다.</p></div>
+  </div>
+</section>
+
+<section id="buffett">
+  <div class="sec-head"><span class="idx">A</span><h2>버핏 기준 우량 기업 10선</h2></div>
+  <div class="callout cool"><p class="verdict">가장 버핏다운 곳은 <b>알파벳과 트레이드웹</b>입니다. 넓은 해자와 꾸준한 이익을 갖췄고 가격도 상대적으로 합리적입니다. 2026년 주가가 크게 떨어진 <b>포티넷·킨세일·넷플릭스</b>는 "훌륭한 기업을 적정 가격에" 살 기회인지 지켜볼 만합니다.</p></div>
+  <div class="cards">
+<article class="card">
+  <div class="top"><div><div class="rank">01</div><h3>Alphabet</h3><div class="sub">GOOGL · 설립 1998 · 검색·유튜브·구글 클라우드</div></div><span class="chip good">최우선</span></div>
+  <dl><dt>실적</dt><dd>3Q26 매출 $1,276억 (+25%), 클라우드 +103%, 영업이익률 31.8%</dd><dt>해자</dt><dd>검색·유튜브의 사용자·데이터 규모. 버크셔도 2025년부터 보유</dd><dt>위험</dt><dd>AI 설비투자로 3Q 잉여현금흐름 −$91억. 검색 반독점 항소 진행 중</dd><dt>주가</dt><dd class="num">약 $290 · 선행 PER 약 25배</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">02</div><h3>Meta Platforms</h3><div class="sub">META · 설립 2004 · 페이스북·인스타그램·왓츠앱</div></div><span class="chip good">우량</span></div>
+  <dl><dt>실적</dt><dd>3Q26 매출 $646억 (+26%)</dd><dt>해자</dt><dd>30억 명 이상이 쓰는 네트워크와 광고 타기팅 데이터</dd><dt>위험</dt><dd>2026년 설비투자 $1,350~1,450억, 3Q 잉여현금흐름 −$21억. 10월 뉴멕시코 $250억 배상 판결(항소)</dd><dt>주가</dt><dd class="num">$641.69 (11/13)</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">03</div><h3>Booking Holdings</h3><div class="sub">BKNG · 설립 1997 · 온라인 여행 예약 (Booking.com 등)</div></div><span class="chip good">우량</span></div>
+  <dl><dt>실적</dt><dd>3Q26 매출 −1.3% (FTC 관련 $9억 차감, 제외 시 +9%), 조정 EBITDA $46억 (+9%)</dd><dt>해자</dt><dd>전 세계 숙소·여행자를 잇는 양면 네트워크, 설비투자 거의 없음</dd><dt>위험</dt><dd>FTC 제재(10억 달러 이상 가능), AI 에이전트가 여행 검색을 대체할 위험</dd><dt>주가</dt><dd class="num">$159.58 (11/13, 25대1 분할 후) · 시총 약 $1,190억</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">04</div><h3>Tradeweb</h3><div class="sub">TW · 설립 1996 · 채권·금리상품 전자거래 플랫폼</div></div><span class="chip good">최우선</span></div>
+  <dl><dt>실적</dt><dd>2025 매출 약 $21억 (+18.9%, 26년 연속 최고), 3Q26 +14.9%, 영업이익률 약 40%</dd><dt>해자</dt><dd>거래 참여자가 많을수록 유동성이 커지는 네트워크 효과</dd><dt>위험</dt><dd>금융시장 거래량 사이클</dd><dt>주가</dt><dd class="num">약 $130~136 (11월 중순)</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">05</div><h3>Arista Networks</h3><div class="sub">ANET · 설립 2004 · AI·클라우드 데이터센터 스위치</div></div><span class="chip good">우량</span></div>
+  <dl><dt>실적</dt><dd>3Q26 매출 $36.6억 (+58.5%), 영업이익률 약 49%, 무차입</dd><dt>해자</dt><dd>대형 고객 상대로 마진 63~65% 10년 유지. 앞선 리포트 체크리스트 33/40</dd><dt>위험</dt><dd>상위 2개 고객 42%, NVIDIA의 이더넷 진입</dd><dt>주가</dt><dd class="num">약 $187 · 2027E PER 약 32배</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">06</div><h3>Veeva Systems</h3><div class="sub">VEEV · 설립 2007 · 제약·바이오 업계 전용 클라우드</div></div><span class="chip good">우량</span></div>
+  <dl><dt>실적</dt><dd>FY26 매출 $32억 (+16%), 순이익률 약 28%, 현금 $72억</dd><dt>해자</dt><dd>규제 산업의 표준 시스템이라 바꾸기 매우 어려움</dd><dt>위험</dt><dd>AI로 소프트웨어 가격이 낮아질 위험, 고객 산업 집중</dd><dt>주가</dt><dd class="num">약 $304~313 · 선행 PER 30~32배</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">07</div><h3>Kinsale Capital</h3><div class="sub">KNSL · 설립 2009 · 특수(E&amp;S) 손해보험</div></div><span class="chip good">우량</span></div>
+  <dl><dt>실적</dt><dd>2025 순이익 $5억 (+21%), 합산비율 75.9%, ROE 약 26%</dd><dt>해자</dt><dd>업계보다 약 20%p 낮은 비용 구조. 버크셔의 보험 모델과 가장 비슷</dd><dt>위험</dt><dd>재물보험 가격 하락으로 3Q 보험료 −4.8%, 주가 52주간 −29%</dd><dt>주가</dt><dd class="num">$365.71 (10/30) · 시총 약 $80~89억</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">08</div><h3>Fortinet</h3><div class="sub">FTNT · 설립 2000 · 방화벽·네트워크 보안</div></div><span class="chip warn">가격 매력↑</span></div>
+  <dl><dt>실적</dt><dd>2025 매출 $68억 (+14%), 잉여현금흐름 $22억, 3Q26 매출 +20%</dd><dt>해자</dt><dd>직접 설계한 보안 칩으로 원가 우위, 높은 전환비용</dd><dt>위험</dt><dd>10월 29일 성장 둔화로 시간외 −25%</dd><dt>주가</dt><dd class="num">급락 전 선행 PER 약 33배 · 11월 시세 미확인</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">09</div><h3>Airbnb</h3><div class="sub">ABNB · 설립 2008 · 숙박 공유 플랫폼</div></div><span class="chip good">우량</span></div>
+  <dl><dt>실적</dt><dd>2025 매출 $122억 (+10%), 잉여현금흐름 $46억 (38%), $120억 자사주 매입</dd><dt>해자</dt><dd>트래픽 대부분이 광고 없이 직접 유입되는 브랜드·네트워크</dd><dt>위험</dt><dd>부킹·구글과 경쟁, IRS 세금 분쟁 $13억</dd><dt>주가</dt><dd class="num">$185.6 (11/15) · 선행 PER 26~29배</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">10</div><h3>Netflix</h3><div class="sub">NFLX · 설립 1997 · 글로벌 스트리밍</div></div><span class="chip warn">관찰</span></div>
+  <dl><dt>실적</dt><dd>3Q26 매출 $128.7억 (+12%), 영업이익률 34.6%</dd><dt>해자</dt><dd>전 세계 규모와 요금 인상 능력(가격 결정력)</dd><dt>위험</dt><dd>콘텐츠 비용 지속, 10월 1,000명 감원·콘텐츠 총괄 퇴임, 광고 목표 하향</dd><dt>주가</dt><dd class="num">약 $70~73 (분할 후) · 2026년 −25~34%</dd></dl>
+</article>
+  </div>
+  <p class="src">차순위: Uber(선행 PER 17~18배, 연간 잉여현금흐름 $104억, 로보택시 위협), AppLovin(순이익률 60% 이상, 공매도 리포트·SEC 조사 보도), Monolithic Power(AI 전력 칩, 반도체 경기), Palomar(킨세일과 비슷한 특수보험사, ROE 26.6%)</p>
+</section>
+
+<section id="growth">
+  <div class="sec-head"><span class="idx">B</span><h2>10년 성장 기대 기업 10선</h2></div>
+  <div class="chart"><div class="ct">최근 분기 매출 성장률 (전년 대비, %)</div>
+    <svg id="c-growth" viewBox="0 0 680 330" role="img" aria-label="10개 성장 기업의 최근 분기 매출 성장률"></svg>
+    <p class="src">회계연도가 달라 분기 시점이 기업마다 다릅니다. DoorDash는 인수 효과 포함, Palo Alto는 회계연도 전체 기준</p></div>
+  <div class="callout"><strong class="t">성장 목록을 볼 때 주의할 점</strong>
+    <ul class="list">
+      <li>대부분 매출의 10배가 넘는 가격에 거래됩니다. 성장이 조금만 둔화돼도 주가가 크게 떨어질 수 있습니다 (예: Datadog 8월 하루 −19%).</li>
+      <li>CrowdStrike·Cloudflare·Snowflake는 주식보상비용 때문에 회계상 적자입니다. 버핏 기준으로는 감점 요인입니다.</li>
+      <li>10년 동안 한 기업이 계속 이기기는 어렵습니다. 여러 곳에 나누고 매년 성장 지속 여부를 점검하는 방식이 안전합니다.</li>
+    </ul></div>
+  <div class="cards">
+<article class="card">
+  <div class="top"><div><div class="rank">01</div><h3>Palantir</h3><div class="sub">PLTR · 설립 2003 · 정부·기업 AI 데이터 플랫폼</div></div><span class="chip good">+96%</span></div>
+  <dl><dt>실적</dt><dd>3Q26 매출 $23.1억 (+96%), 미국 상업 +148%, 2025 순이익률 36%</dd><dt>성장 동력</dt><dd>기업 운영에 AI를 실제로 붙이는 소프트웨어. 정부·대기업 깊은 고착</dd><dt>위험</dt><dd>매출의 45~48배 수준의 극단적 밸류에이션</dd><dt>주가</dt><dd class="num">약 $160~165</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">02</div><h3>Cloudflare</h3><div class="sub">NET · 설립 2009 · 인터넷 인프라·보안 네트워크</div></div><span class="chip good">+39%</span></div>
+  <dl><dt>실적</dt><dd>3Q26 매출 $7.8억 (+39%, 약 4년 만의 최고), 연 가이던스 상향</dd><dt>성장 동력</dt><dd>AI 에이전트 트래픽과 엣지 추론 확대</dd><dt>위험</dt><dd>GAAP 적자, 선행 매출 약 29배, 2026년 두 차례 장애</dd><dt>주가</dt><dd class="num">$293.69 (11/16)</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">03</div><h3>Datadog</h3><div class="sub">DDOG · 설립 2010 · 클라우드·AI 시스템 모니터링</div></div><span class="chip good">+35%</span></div>
+  <dl><dt>실적</dt><dd>3Q26 매출 $12억 (+35%), 잉여현금흐름률 21%</dd><dt>성장 동력</dt><dd>기업 IT가 복잡해질수록 필수가 되는 관측 도구</dd><dt>위험</dt><dd>8월 최대 고객(OpenAI로 보도) 사용량 축소로 하루 −19%</dd><dt>주가</dt><dd class="num">$184.16 (11/13)</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">04</div><h3>Snowflake</h3><div class="sub">SNOW · 설립 2012 · 기업 데이터·AI 플랫폼</div></div><span class="chip good">+35%</span></div>
+  <dl><dt>실적</dt><dd>2Q FY27 매출 $15.5억 (+35%), 잉여현금흐름률 24%</dd><dt>성장 동력</dt><dd>기업 데이터가 쌓일수록 커지는 플랫폼, 시장 규모 2031년 $4,600억 제시</dd><dt>위험</dt><dd>GAAP 영업손실률 −31%(주식보상), Databricks 경쟁</dd><dt>주가</dt><dd class="num">약 $308~324</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">05</div><h3>Palo Alto Networks</h3><div class="sub">PANW · 설립 2005 · 통합 보안 플랫폼</div></div><span class="chip good">+24%</span></div>
+  <dl><dt>실적</dt><dd>FY26 매출 $115억 (+24%, CyberArk 포함), FY27 가이던스 $141~142억</dd><dt>성장 동력</dt><dd>보안 제품을 하나로 묶는 플랫폼 전략과 전환비용</dd><dt>위험</dt><dd>성장 일부가 인수에서 나옴. 오늘(11/18) 분기 실적 발표</dd><dt>주가</dt><dd class="num">$322.24 (11/13)</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">06</div><h3>CrowdStrike</h3><div class="sub">CRWD · 설립 2011 · 엔드포인트·클라우드 보안</div></div><span class="chip good">+26%</span></div>
+  <dl><dt>실적</dt><dd>2Q FY27 매출 $14.7억 (+26%), ARR $58억, 잉여현금흐름률 약 26%</dd><dt>성장 동력</dt><dd>보안 투자는 경기와 무관하게 늘어나는 필수 지출</dd><dt>위험</dt><dd>매출의 약 37배, GAAP 적자. 12월 1일 실적 발표</dd><dt>주가</dt><dd class="num">약 $208~217 (4대1 분할 후)</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">07</div><h3>Samsara</h3><div class="sub">IOT · 설립 2015 · 물류·현장 운영 IoT 플랫폼</div></div><span class="chip good">+30%</span></div>
+  <dl><dt>실적</dt><dd>2Q FY27 매출 $5.1억 (+30%), 4분기 연속 GAAP 흑자</dd><dt>성장 동력</dt><dd>트럭·공장·건설 현장 같은 물리적 운영의 디지털화</dd><dt>위험</dt><dd>운송·산업 경기, 하드웨어 원가</dd><dt>주가</dt><dd class="num">$41.36 (11/13)</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">08</div><h3>DoorDash</h3><div class="sub">DASH · 설립 2013 · 배달·로컬 커머스</div></div><span class="chip good">+34%</span></div>
+  <dl><dt>실적</dt><dd>3Q26 매출 $46.2억 (+34%, 인수 효과 제외 +23%), 순이익 $4.7억</dd><dt>성장 동력</dt><dd>지역 상권 물류 네트워크. Instacart $170억 인수 합의(10/29)</dd><dt>위험</dt><dd>인수 통합·반독점 심사, 배달기사 노동 규제</dd><dt>주가</dt><dd class="num">$171.51 (11/13)</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">09</div><h3>Toast</h3><div class="sub">TOST · 설립 2011 · 식당 운영 시스템(POS·결제)</div></div><span class="chip good">+21%</span></div>
+  <dl><dt>실적</dt><dd>3Q26 매출 $19.8억 (+21%), 2025 GAAP 순이익 $3.4억</dd><dt>성장 동력</dt><dd>미국 식당의 약 20%가 사용, 결제·급여·주문까지 확장</dd><dt>위험</dt><dd>결제 마진이 낮음, 미국 식당 시장 포화</dd><dt>주가</dt><dd class="num">$34.68 (11/13) · 매출 약 2.6배</dd></dl>
+</article>
+<article class="card">
+  <div class="top"><div><div class="rank">10</div><h3>Astera Labs</h3><div class="sub">ALAB · 설립 2017 · AI 서버 연결 칩</div></div><span class="chip good">+154%</span></div>
+  <dl><dt>실적</dt><dd>3Q26 매출 $5.8억 (+154%), GAAP 영업이익률 약 31%</dd><dt>성장 동력</dt><dd>AI 서버 안에서 GPU·메모리를 잇는 연결 칩 수요</dd><dt>위험</dt><dd>반도체 경기에 따라 크게 출렁임. 중간선거 후 일주일 −26%</dd><dt>주가</dt><dd class="num">$216.35 (11/13)</dd></dl>
+</article>
+  </div>
+  <p class="src">차순위: Monolithic Power(3Q26 +63%, 반도체 경기), Rocket Lab(3Q26 +73%, 수주잔고 $35.7억, 적자·신형 로켓 2027년 지연), Uber(총거래액 +20%)</p>
+</section>
+
+<section id="excluded">
+  <div class="sec-head"><h2>조사했지만 제외한 후보</h2></div>
+  <div class="tbl"><table>
+    <tr><th>기업</th><th>제외 이유</th></tr>
+    <tr><td class="k">HubSpot</td><td>2026년 주가 약 70% 하락, 회계상 이익이 거의 없음. AI 에이전트가 좌석당 과금 모델을 위협</td></tr>
+    <tr><td class="k">ServiceNow · Workday · Paycom</td><td>여전히 수익성은 좋지만 AI가 기업 소프트웨어를 대체할 수 있다는 우려로 해자가 시험받는 중. ServiceNow는 한 달간 −30%</td></tr>
+    <tr><td class="k">Doximity</td><td>2분기 성장률 4%로 급락, AI 임상 도구(OpenEvidence)와 경쟁</td></tr>
+    <tr><td class="k">Pinterest</td><td>성장 둔화(Q4 가이던스 8~12%), 광고 단가 하락, 해자 약함</td></tr>
+    <tr><td class="k">Duolingo</td><td>2026년 2월 가이던스 충격으로 −23%, AI 튜터의 가격 결정력 위협</td></tr>
+    <tr><td class="k">Ryan Specialty</td><td>순부채 약 $35억, 회계상 이익률 낮음</td></tr>
+    <tr><td class="k">Tesla</td><td>2025년 첫 매출 감소, 3Q26 영업이익률 2.6%. 가치가 아직 증명되지 않은 자율주행·로봇에 달려 있음</td></tr>
+    <tr><td class="k">Robinhood</td><td>3Q26 성장 12%로 둔화, 가상화폐 매출 −55%, 예측시장 규제</td></tr>
+    <tr><td class="k">Coupang</td><td>미국 법인이지만 사업 대부분이 한국. 개인정보 유출 과징금 약 $4억, 3Q26 영업적자</td></tr>
+    <tr><td class="k">Cerebras</td><td>앞선 리포트에서 버핏 체크리스트 9/40, 해자 없음~좁음</td></tr>
+  </table></div>
+</section>
+
+<section id="notes">
+  <div class="sec-head"><h2>유의사항</h2></div>
+  <ul class="list">
+    <li>수치는 기업 실적 발표를 인용한 언론·데이터 사이트(Business Wire, Barchart, Finviz, TIKR, StockAnalysis, Morningstar 등)를 교차 확인한 것입니다. 일부 주가는 1~4주 전 값이니 매매 전에 실시간 시세를 확인하세요.</li>
+    <li>설립 연도와 CEO는 일반에 알려진 정보를 썼습니다.</li>
+    <li>"최우선·우량·관찰" 표시와 목록 선정은 공개 자료를 바탕으로 한 정성 판단입니다.</li>
+    <li>CrowdStrike(12/1), Snowflake(12/2 전후), Veeva(11/25 전후), Palo Alto(11/18) 실적이 곧 발표됩니다.</li>
+    <li>정보 제공 목적이며 특정 종목의 매수·매도를 권유하지 않습니다.</li>
+  </ul>
+</section>
+
+<footer>세레브라스·아리스타 개별 리포트와 같은 기준으로 작성했습니다. 기준일 2026년 11월 18일.</footer>
+</main>
+
+<script>
+(function(){
+  const NS="http://www.w3.org/2000/svg";
+  const el=(t,a,p,x)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;if(p)p.appendChild(e);return e;};
+  const rows=[["Astera Labs",154],["Palantir",96],["Cloudflare",39],["Datadog",35],["Snowflake",35],["DoorDash",34],["Samsara",30],["CrowdStrike",26],["Palo Alto Networks",24],["Toast",21]];
+  const s=document.getElementById("c-growth"),W=680,H=330,m={l:150,r:56,t:8,b:26},max=160;
+  const ih=H-m.t-m.b,rh=ih/rows.length,X=v=>m.l+(W-m.l-m.r)*v/max;
+  [0,40,80,120,160].forEach(v=>{el("line",{x1:X(v),x2:X(v),y1:m.t,y2:H-m.b,stroke:"var(--line)"},s);el("text",{x:X(v),y:H-8,"text-anchor":"middle"},s,v+"%");});
+  rows.forEach(([n,v],i)=>{const y=m.t+i*rh+rh*.18;
+    el("text",{x:m.l-10,y:y+rh*.32+4,"text-anchor":"end",class:"lbl"},s,n);
+    el("rect",{x:m.l,y,width:X(v)-m.l,height:rh*.64,rx:3,fill:v>=50?"var(--accent)":"var(--navy)"},s);
+    el("text",{x:X(v)+6,y:y+rh*.32+4},s,"+"+v+"%");});
+})();
+</script>
